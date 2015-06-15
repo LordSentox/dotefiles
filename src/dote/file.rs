@@ -18,14 +18,33 @@
  * THE SOFTWARE.
  */
 
-mod dote;
-use dote::Script;
+use dote::{Script};
 
-fn main () {
-    let file = match Script::open("test") {
-        Ok (file) => file,
-        Err (code) => panic!(code)
-    };
+use std::path::Path;
+use std::fs::File;
+use std::io;
 
-    println!("Filename is: {}", file.path());
+impl Script {
+	pub fn open (name: &str) -> Result <Script, io::Error> {
+		let mut path_string = name.to_string();
+		path_string.push_str(".dote");
+		let path_string = path_string;
+
+		let path = Path::new(&path_string);
+		let mut file = match File::open(&path) {
+			Ok (file) => file,
+			Err (code) => return Err (code)
+		};
+
+		Ok (
+			Script {
+				path: name.to_string() + ".dote",
+				file: file
+			}
+		)
+	}
+
+	pub fn path (&self) -> &String {
+		&self.path
+	}
 }

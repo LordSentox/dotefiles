@@ -18,14 +18,11 @@
  * THE SOFTWARE.
  */
 
-mod dote;
-use dote::Script;
+use std::fs::{File};
 
-fn main () {
-    let file = match Script::open("test") {
-        Ok (file) => file,
-        Err (code) => panic!(code)
-    };
-
-    println!("Filename is: {}", file.path());
+pub struct Script {
+	path: String,
+	file: File
 }
+
+mod file;
