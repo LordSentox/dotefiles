@@ -25,12 +25,7 @@ use std::fs::File;
 use std::io;
 
 impl Script {
-	pub fn open (name: &str) -> Result <Script, io::Error> {
-		let mut path_string = name.to_string();
-		path_string.push_str(".dote");
-		let path_string = path_string;
-
-		let path = Path::new(&path_string);
+	pub fn open (path: &Path) -> Result <Script, io::Error> {
 		let mut file = match File::open(&path) {
 			Ok (file) => file,
 			Err (code) => return Err (code)
@@ -44,7 +39,4 @@ impl Script {
 		)
 	}
 
-	pub fn path (&self) -> &String {
-		&self.path
-	}
 }

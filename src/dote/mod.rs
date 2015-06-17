@@ -19,9 +19,10 @@
  */
 
 use std::fs::{File};
+use std::path::{Path};
 
 pub struct Script {
-	path: String,
+	path: Path,
 	file: File
 }
 
